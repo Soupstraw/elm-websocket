@@ -26,7 +26,7 @@ webSocketApp incomingBroadcasts server pendingConnection = do
   WS.forkPingThread connection 30
   forkBroadcastThread connection incomingBroadcasts
   let loop = do
-        WS.Text message <- WS.receiveDataMessage connection
+        WS.Text message _ <- WS.receiveDataMessage connection
         traverse_ (handleRequest connection server) (decode message)
         loop
   loop
